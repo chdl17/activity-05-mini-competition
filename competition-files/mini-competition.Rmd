@@ -3,6 +3,56 @@ title: "Activity 5 - Mini-competition Explorations"
 output: github_document
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r}
+library(ggplot2)
+```
+
+Loading the data
+```{r}
+# Load the data from the URL
+url <- "https://raw.githubusercontent.com/chdl17/activity-05-mini-competition/main/competition-files/data/allendale-students.csv"
+allendale_students <- read.csv(url)
+
+# View the data
+head(allendale_students)
+```
+
+Non-linearity of the data:
+```{r}
+plot(Final_Grade ~ Hours_Studied, data = allendale_students)
+
+```
+
+The plot shows a positive linear relationship between the variables, indicating that the assumption of linearity may hold.
+
+
+Correlation of error terms
+```{r}
+model <- lm(Final_Grade ~ Hours_Studied, data = allendale_students)
+plot(model$fitted.values, model$residuals)
+```
+
+The plot shows no pattern, indicating that the assumption of uncorrelated errors may hold.
+
+
+Non-constant variance of error terms
+```{r}
+# Create a scale-location plot
+plot(model$fitted.values, abs(model$residuals))
+```
+
+The plot shows that the spread of the residuals is roughly equal across all values of the predicted variable, indicating that the assumption of constant variance may hold.
+
+Outliers
+```{r}
+# Create a boxplot of the residuals
+plot(Hours_Studied, model$residuals)
+```
+
+The plot shows no outliers, indicating that there may be no outliers in the data.
+
